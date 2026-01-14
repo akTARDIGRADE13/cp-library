@@ -21,6 +21,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Prune ACL tests
+        run: |
+          rm -rf third_party/acl/test
+          rm -rf third_party/acl/tools
+          rm -rf third_party/acl/document_en
+          rm -rf third_party/acl/document_ja
+          rm -rf third_party/acl/expander.py
 
       - name: Install clang-format
         run: |
