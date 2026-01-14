@@ -58,7 +58,6 @@ jobs:
           # include: your-own-include/
           exclude: |
                 scripts/
-                third_party/
           # If you have config.toml
           config: .verify-helper/config.toml
       - name: parse-doxygen
