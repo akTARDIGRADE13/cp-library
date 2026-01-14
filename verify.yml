@@ -22,6 +22,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install clang-format
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format
+
+      - name: Check formatting
+        run: |
+          FILES=$(git ls-files '*.cpp' '*.cc' '*.cxx' '*.h' '*.hpp' | grep -vE '^third_party/')
+          if [ -z "$FILES" ]; then
+            echo "No C/C++ files."
+            exit 0
+          fi
+          clang-format --dry-run --Werror $FILES
+
       - name: Set up competitive-verifier
         uses: competitive-verifier/actions/setup@v2
         with:

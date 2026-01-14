@@ -1,0 +1,39 @@
+BasedOnStyle: LLVM
+
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+
+ColumnLimit: 100
+BreakBeforeBraces: Attach
+
+# Access specifiers: public/private/protected
+AccessModifierOffset: -4
+IndentAccessModifiers: false
+
+# Short functions / control statements
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+
+# Spacing
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+SpaceInEmptyParentheses: false
+
+# Initializer lists
+ConstructorInitializerIndentWidth: 4
+BreakConstructorInitializers: BeforeComma
+
+# Includes
+SortIncludes: false
+IncludeBlocks: Preserve
+
+# Pointer / reference style
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# Templates (CP-friendly)
+AlwaysBreakTemplateDeclarations: Yes
+PenaltyBreakTemplateDeclaration: 10
+
