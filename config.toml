@@ -1,0 +1,2 @@
+[[languages.cpp.environments]]
+CXX = "g++ -std=gnu++20 -O2"
