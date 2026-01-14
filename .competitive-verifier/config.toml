@@ -1,6 +1,21 @@
 [[languages.cpp.environments]]
 CXX = "g++"
-
-[[languages.cpp.environments]]
-CXX = "clang++"
-CXXFLAGS = ["-std=gnu++20", "-O2", "-I ."]
+CXXFLAGS = [
+    "-std=gnu++23",
+    "-O2",
+    "-D_FORTIFY_SOURCE=2",
+    "-fdiagnostics-color=always",
+    "-fno-sanitize-recover",
+    "-fsanitize=undefined,address",
+    "-Wall",
+    "-Wextra",
+    "-Wshadow",
+    "-Wformat=2",
+    "-Wfloat-equal",
+    "-Wconversion",
+    "-Wlogical-op",
+    "-Wshift-overflow=2",
+    "-Wduplicated-cond",
+    "-Wcast-qual",
+    "-Wcast-align=strict"
+]
