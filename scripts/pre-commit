@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+# clang-format が無ければ何もしない
+if ! command -v clang-format >/dev/null 2>&1; then
+    echo "clang-format not found, skipping format."
+    exit 0
+fi
+
+# 変更された C/C++ ファイルだけ取得
+FILES=$(git diff --cached --name-only --diff-filter=ACM \
+    | grep -E '\.(cpp|cc|cxx|h|hpp)$' || true)
+
+if [ -z "$FILES" ]; then
+    exit 0
+fi
+
+echo "Running clang-format on staged files..."
+
+# フォーマット
+for f in $FILES; do
+    clang-format -i "$f"
+    git add "$f"
+done
+
