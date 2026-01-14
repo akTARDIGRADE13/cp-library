@@ -1,16 +1,12 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/4/ALDS1_4_B"
-#include <algorithm>
-#include <iostream>
-#include <vector>
-#define REP(i, n) for (int i = 0; (i) < (int)(n); ++(i))
-#define ALL(x) std::begin(x), std::end(x)
+#include<bits/stdc++.h>
 using namespace std;
 
 int main() {
   int n;
   cin >> n;
   vector<int> s(n);
-  REP(i, n) {
+  for(int i = 0; i < n; ++i) {
     cin >> s[i];
   }
   int q;
@@ -19,7 +15,7 @@ int main() {
   while (q--) {
     int t_i;
     cin >> t_i;
-    cnt += binary_search(ALL(s), t_i);
+    cnt += ranges::binary_search(s, t_i);
   }
   cout << cnt << endl;
   return 0;
