@@ -1,12 +1,12 @@
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/4/ALDS1_4_B"
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
   int n;
   cin >> n;
   vector<int> s(n);
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> s[i];
   }
   int q;
