@@ -1,0 +1,63 @@
+# Site Settings
+title                    : "akTARDIGRADE13'2 Library"
+description              : "競技プログラミング用のライブラリ集"
+name                     : "akTARDIGRADE13"
+twitter_username         : "akTARDIGRADE13"
+github_username         : "akTARDIGRADE13"
+minimal_mistakes_skin    : "mint"
+locale                   : "ja-JP" 
+url                      : "https://aktardigrade13.github.io"
+repository               : "https://github.com/akTARDIGRADE13/cp-library"
+
+# Build settings
+remote_theme: mmistakes/minimal-mistakes
+
+# Plugins (previously gems:)
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+
+# Site Author
+author:
+  name             : "akTARDIGRADE13"
+  avatar           : "/assets/images/bio-photo.png"
+  bio              : "ぱわー"
+  links:
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://aktars-blog.com"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/akTARDIGRADE13"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/akTARDIGRADE13"
+
+footer:
+  links:
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://aktars-blog.com"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/akTARDIGRADE13"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/akTARDIGRADE13"
+
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
