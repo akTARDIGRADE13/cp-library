@@ -168,21 +168,36 @@ jobs:
           destination: _jekyll
           write-summary: true
 
-      - name: Patch page layout (author sidebar)
+      - name: Patch page layout to add author sidebar
         shell: bash
         run: |
           set -euxo pipefail
-          mkdir -p _jekyll/_layouts
-          cat > _jekyll/_layouts/page.html <<'EOF'
+
+          PAGE="_jekyll/_layouts/page.html"
+          mkdir -p "$(dirname "$PAGE")"
+
+          cat > "$PAGE" <<'EOF'
           ---
-          layout: single
+          layout: default
           author_profile: true
           ---
-          {{ content }}
-          EOF
-          echo "== patched _jekyll/_layouts/page.html =="
-          sed -n '1,20p' _jekyll/_layouts/page.html
 
+          <div class="page__layout">
+            {% if page.author_profile %}
+              <aside class="sidebar sticky">
+                {% include author-profile.html %}
+              </aside>
+            {% endif %}
+
+            <main class="page__content" role="main">
+              {{ content }}
+            </main>
+          </div>
+          EOF
+
+          echo "== patched page.html =="
+          sed -n '1,120p' "$PAGE"
+            
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Build with Jekyll
