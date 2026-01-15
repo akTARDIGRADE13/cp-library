@@ -168,6 +168,21 @@ jobs:
           destination: _jekyll
           write-summary: true
 
+      - name: Patch page layout (author sidebar)
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p _jekyll/_layouts
+          cat > _jekyll/_layouts/page.html <<'EOF'
+          ---
+          layout: single
+          author_profile: true
+          ---
+          {{ content }}
+          EOF
+          echo "== patched _jekyll/_layouts/page.html =="
+          sed -n '1,20p' _jekyll/_layouts/page.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Build with Jekyll
