@@ -23,7 +23,7 @@ SpaceInEmptyParentheses: false
 
 # Initializer lists
 ConstructorInitializerIndentWidth: 4
-BreakConstructorInitializers: BeforeComma
+BreakConstructorInitializers: AfterColon
 
 # Includes
 SortIncludes: false
