@@ -7,7 +7,7 @@
 namespace akTARDIGRADE13 {
 
 /**
- * @brief Fenwick Tree（Binary Indexed Tree）
+ * @brief Fenwick Tree
  *
  * 点更新および区間和クエリを高速に処理するためのデータ構造。
  *
