@@ -1,5 +1,5 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/ordered_set"
-#include "../cp-library/fenwicktree"
+#include "../../cp-library/fenwicktree"
 
 #include <bits/stdc++.h>
 using namespace std;

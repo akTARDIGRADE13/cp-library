@@ -1,6 +1,6 @@
 ---
 title: Fenwick Tree
-documentation_of: //data_structure/fenwicktree.hpp
+documentation_of: //src/data_structure/fenwicktree.hpp
 ---
 
 点更新および区間和クエリを高速に処理するためのデータ構造。
