@@ -1,6 +1,6 @@
 ---
 title: Polar Angle Sort (atan2-compatible)
-documentation_of: //src/geometry/angular_sort.hpp
+documentation_of: //src/geometry/angularsort.hpp
 ---
 
 点（ベクトル）を原点からの **偏角** に基づいて並べるための比較器。
