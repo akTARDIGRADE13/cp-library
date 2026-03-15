@@ -35,7 +35,7 @@ public:
         int step = 1;
         while (step < _n) step <<= 1;
         while (step) {
-            std::size_t nxt = idx + step;
+            int nxt = idx + step;
             if (nxt <= _n) {
                 T val = cur + data[nxt - 1];
                 if (val < w) {
@@ -55,7 +55,7 @@ public:
         int step = 1;
         while (step < _n) step <<= 1;
         while (step) {
-            std::size_t nxt = idx + step;
+            int nxt = idx + step;
             if (nxt <= _n) {
                 T val = cur + data[nxt - 1];
                 if (val <= w) {
