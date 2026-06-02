@@ -19,7 +19,7 @@ int main() {
     }
     ranges::sort(num);
     num.erase(ranges::unique(num).begin(), num.end());
-    akTARDIGRADE13::OfflineTree<int> tree(num);
+    akTARDIGRADE13::OfflineSet<int> tree(num);
 
     for (int i = 0; i < N; ++i) {
         tree.insert(a[i]);
