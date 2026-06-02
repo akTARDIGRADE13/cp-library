@@ -5,62 +5,41 @@ documentation_of: //src/data_structure/offline_tree.hpp
 
 あらかじめ与えられた値集合に対して座標圧縮を行い，Fenwick Tree を用いて
 
-* 要素の挿入
-* 要素の削除
-* 存在判定
-* 指定した値の個数の取得
-* `k` 番目に小さい要素の取得
-* `x` 未満 / 以下の要素数の取得
-* `x` 以上 / より大きい最小要素の取得
-* `x` 以下 / 未満の最大要素の取得
+- 要素の挿入
+- 要素の削除
+- 存在判定
+- `k` 番目に小さい要素の取得
+- `x` 未満 / 以下の要素数の取得
+- `x` 以上 / より大きい最小要素の取得
 
 を高速に行うことができるデータ構造。
 
 `pbds` の `tree` と同様に順序付き集合として扱えるが，扱う値は **事前に列挙されたものに限られる**。
 
-* 外部の順序は `T` の `<` に従う
-* `k` は **0-indexed**
-* `Multi = false` のとき，同じ値は 2 回以上入らない
-* `Multi = true` のとき，同じ値を複数個持つことができる
+- 外部の順序は `T` の `<` に従う
+- `k` は **0-indexed**
+- 同じ値は 2 回以上入らない
 
 ---
 
 ## 型
 
-```
-template <class T, bool Multi = false>
-struct OfflineTree;
-```
+- `T`：比較可能な型
 
-* `T`：比較可能な型
-
-  * `std::ranges::sort`
-  * `std::ranges::lower_bound`
-  * `std::ranges::upper_bound`
+  - `std::ranges::sort`
+  - `std::ranges::lower_bound`
+  - `std::ranges::upper_bound`
 
   が使用できる必要がある。
-
-* `Multi`：重複を許すかどうか
-
-  * `false`：集合として扱う
-  * `true`：多重集合として扱う
-
-また，次の alias が定義されている。
-
-```
-template <class T>
-using OfflineSet = OfflineTree<T, false>;
-
-template <class T>
-using OfflineMultiSet = OfflineTree<T, true>;
-```
 
 ---
 
 ## コンストラクタ
 
 ```
-OfflineTree<T, Multi>()
+
+OfflineTree<T>()
+
 ```
 
 空の `OfflineTree` を作る。
@@ -76,16 +55,15 @@ $$
 ---
 
 ```
-OfflineTree<T, Multi>(std::vector<T> xs)
+
+OfflineTree<T>(std::vector<T> xs)
+
 ```
 
 値集合 `xs` をもとに `OfflineTree` を構築する。
 
-内部では `xs` を sort し，重複を削除したものを管理対象とする。
+内部では `xs` を sort し，重複を削除したものを管理対象とする。  
 以後，`insert` / `erase` できるのはこの中に含まれる値のみである。
-
-`Multi = true` の場合でも，コンストラクタに渡す `xs` には同じ値を複数回入れる必要はない。
-内部では各値について現在の個数を Fenwick Tree 上で管理する。
 
 **計算量**
 
@@ -100,10 +78,12 @@ $$
 ## idx_of
 
 ```
+
 int idx_of(const T& x) const
+
 ```
 
-内部で管理しているソート済み列における `x` の挿入位置を返す。
+内部で管理しているソート済み列における `x` の挿入位置を返す。  
 これは `lower_bound(xs, x)` の位置に対応する。
 
 `x` 自体が管理対象に含まれるとは限らない。
@@ -116,37 +96,17 @@ $$
 
 ---
 
-## count
-
-```
-int count(const T& x) const
-```
-
-現在含まれている `x` の個数を返す。
-
-* `x` が管理対象に含まれていない場合は `0` を返す
-* `Multi = false` のとき，返り値は `0` または `1`
-* `Multi = true` のとき，返り値は現在の多重度
-
-**計算量**
-
-$$
-O(\log n)
-$$
-
----
-
 ## contains
 
 ```
+
 bool contains(const T& x) const
+
 ```
 
 `x` が現在集合に含まれていれば `true`，そうでなければ `false` を返す。
 
 `x` が管理対象に含まれていない場合も `false` を返す。
-
-`Multi = true` の場合は，`x` の個数が 1 個以上なら `true` を返す。
 
 **計算量**
 
@@ -159,14 +119,15 @@ $$
 ## insert
 
 ```
+
 bool insert(const T& x)
+
 ```
 
-`x` を追加する。
+`x` を集合に追加する。
 
-* `x` が管理対象に含まれない場合は何もしない
-* `Multi = false` のとき，すでに `x` が含まれている場合は何もしない
-* `Multi = true` のとき，すでに `x` が含まれていても個数を 1 増やす
+- `x` が管理対象に含まれない場合は何もしない
+- すでに `x` が集合に含まれている場合は何もしない
 
 追加に成功したとき `true`，失敗したとき `false` を返す。
 
@@ -181,41 +142,17 @@ $$
 ## erase
 
 ```
+
 bool erase(const T& x)
+
 ```
 
-`x` を 1 個削除する。
+`x` を集合から削除する。
 
-* `x` が管理対象に含まれない場合は何もしない
-* `x` が現在 1 個も含まれていない場合は何もしない
+- `x` が管理対象に含まれない場合は何もしない
+- `x` が集合に含まれていない場合は何もしない
 
 削除に成功したとき `true`，失敗したとき `false` を返す。
-
-`Multi = true` の場合も，削除されるのは 1 個だけである。
-
-**計算量**
-
-$$
-O(\log n)
-$$
-
----
-
-## erase_all
-
-```
-int erase_all(const T& x)
-```
-
-`x` をすべて削除する。
-
-削除した個数を返す。
-
-* `x` が管理対象に含まれない場合は `0` を返す
-* `x` が現在 1 個も含まれていない場合は `0` を返す
-
-`Multi = false` のとき，返り値は `0` または `1` である。
-`Multi = true` のとき，返り値は削除前の `x` の多重度である。
 
 **計算量**
 
@@ -228,13 +165,12 @@ $$
 ## size
 
 ```
+
 int size() const
+
 ```
 
-現在含まれている要素数を返す。
-
-`Multi = true` の場合は，重複を個別に数える。
-例えば `3` が 2 個，`5` が 1 個含まれているなら `size()` は `3` を返す。
+現在集合に含まれている要素数を返す。
 
 **計算量**
 
@@ -247,10 +183,12 @@ $$
 ## empty
 
 ```
+
 bool empty() const
+
 ```
 
-空なら `true`，そうでなければ `false` を返す。
+集合が空なら `true`，そうでなければ `false` を返す。
 
 **計算量**
 
@@ -263,18 +201,18 @@ $$
 ## order_of_key
 
 ```
+
 int order_of_key(const T& x) const
+
 ```
 
 `x` 未満の要素数を返す。
 
 $$
-#{ y \in S \mid y < x }
+\#\{ y \in S \mid y < x \}
 $$
 
 `pbds` の `tree::order_of_key` に対応する。
-
-`Multi = true` の場合は，重複を個別に数える。
 
 **計算量**
 
@@ -287,17 +225,17 @@ $$
 ## count_lt
 
 ```
+
 int count_lt(const T& x) const
+
 ```
 
-`x` 未満の要素数を返す。
+`x` 未満の要素数を返す。  
 `order_of_key(x)` の別名。
 
 $$
-#{ y \in S \mid y < x }
+\#\{ y \in S \mid y < x \}
 $$
-
-`Multi = true` の場合は，重複を個別に数える。
 
 **計算量**
 
@@ -310,16 +248,16 @@ $$
 ## count_le
 
 ```
+
 int count_le(const T& x) const
+
 ```
 
 `x` 以下の要素数を返す。
 
 $$
-#{ y \in S \mid y \le x }
+\#\{ y \in S \mid y \le x \}
 $$
-
-`Multi = true` の場合は，重複を個別に数える。
 
 **計算量**
 
@@ -332,21 +270,20 @@ $$
 ## find_by_order
 
 ```
+
 std::optional<T> find_by_order(int k) const
+
 ```
 
-`k` 番目に小さい要素を返す。
+`k` 番目に小さい要素を返す。  
 ただし `k` は **0-indexed**。
 
-* `k = 0` は最小要素
-* `k = size() - 1` は最大要素
+- `k = 0` は最小要素
+- `k = size() - 1` は最大要素
 
 範囲外なら `std::nullopt` を返す。
 
 `pbds` の `tree::find_by_order` に対応する。
-
-`Multi = true` の場合は，重複も別々の要素として数える。
-例えば `{1, 3, 3, 5}` に対して `find_by_order(1)` と `find_by_order(2)` はどちらも `3` を返す。
 
 **制約**
 
@@ -367,10 +304,12 @@ $$
 ## kth
 
 ```
+
 std::optional<T> kth(int k) const
+
 ```
 
-`k` 番目に小さい要素を返す。
+`k` 番目に小さい要素を返す。  
 `find_by_order(k)` の別名。
 
 範囲外なら `std::nullopt` を返す。
@@ -386,18 +325,18 @@ $$
 ## lower_bound
 
 ```
+
 std::optional<T> lower_bound(const T& x) const
+
 ```
 
 `x` 以上の最小要素を返す。
 
 $$
-\min { y \in S \mid y \ge x }
+\min \{ y \in S \mid y \ge x \}
 $$
 
 そのような要素が存在しないときは `std::nullopt` を返す。
-
-`Multi = true` の場合でも，返す値は 1 つである。
 
 **計算量**
 
@@ -410,18 +349,18 @@ $$
 ## upper_bound
 
 ```
+
 std::optional<T> upper_bound(const T& x) const
+
 ```
 
 `x` より大きい最小要素を返す。
 
 $$
-\min { y \in S \mid y > x }
+\min \{ y \in S \mid y > x \}
 $$
 
 そのような要素が存在しないときは `std::nullopt` を返す。
-
-`Multi = true` の場合でも，`x` と等しい要素はスキップされる。
 
 **計算量**
 
@@ -434,18 +373,18 @@ $$
 ## prev_le
 
 ```
+
 std::optional<T> prev_le(const T& x) const
+
 ```
 
 `x` 以下の最大要素を返す。
 
 $$
-\max { y \in S \mid y \le x }
+\max \{ y \in S \mid y \le x \}
 $$
 
 そのような要素が存在しないときは `std::nullopt` を返す。
-
-`Multi = true` の場合でも，返す値は 1 つである。
 
 **計算量**
 
@@ -458,18 +397,18 @@ $$
 ## prev_lt
 
 ```
+
 std::optional<T> prev_lt(const T& x) const
+
 ```
 
 `x` 未満の最大要素を返す。
 
 $$
-\max { y \in S \mid y < x }
+\max \{ y \in S \mid y < x \}
 $$
 
 そのような要素が存在しないときは `std::nullopt` を返す。
-
-`Multi = true` の場合でも，`x` と等しい要素はスキップされる。
 
 **計算量**
 
@@ -479,55 +418,12 @@ $$
 
 ---
 
-## 使用例
-
-```
-std::vector<int> xs = {1, 2, 3, 4, 5};
-
-akTARDIGRADE13::OfflineSet<int> st(xs);
-
-st.insert(3); // true
-st.insert(3); // false
-
-st.count(3);    // 1
-st.contains(3); // true
-st.size();      // 1
-```
-
-```
-std::vector<int> xs = {1, 2, 3, 4, 5};
-
-akTARDIGRADE13::OfflineMultiSet<int> mst(xs);
-
-mst.insert(3); // true
-mst.insert(3); // true
-mst.insert(3); // true
-
-mst.count(3); // 3
-mst.size();   // 3
-
-mst.erase(3);
-
-mst.count(3); // 2
-```
-
-alias を使わずに直接書くこともできる。
-
-```
-akTARDIGRADE13::OfflineTree<int> st(xs);        // set
-akTARDIGRADE13::OfflineTree<int, true> mst(xs); // multiset
-```
-
----
-
 ## 備考
 
-このデータ構造は，扱いたい値をあらかじめコンストラクタに渡しておく必要がある。
+このデータ構造は集合として振る舞うため，同じ値を複数個は持たない。  
+重複を許したい場合は `multiset` 版を別に実装する必要がある。
+
+また，扱いたい値はあらかじめコンストラクタに渡しておく必要がある。  
 コンストラクタで与えていない値は後から `insert` できない。
-
-`Multi = false` の場合は集合として振る舞うため，同じ値を複数個は持たない。
-`Multi = true` の場合は多重集合として振る舞い，同じ値を複数個持つことができる。
-
-いずれの場合も，座標圧縮後の各値に対する現在の個数を Fenwick Tree で管理している。
 
 ---
